@@ -22,11 +22,15 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
             // Create a unique position for the player
             Vector3 spawnPosition = new Vector3(0, 10, 0);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
+            
+            // Assign the player role based on the game mode
+            var playerComponent = networkPlayerObject.GetComponent<Player>();
+            playerComponent.Role = runner.IsClient ? Player.PlayerRole.Thief : Player.PlayerRole.Hacker;
+
             // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
         }
     }
-
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))

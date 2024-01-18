@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5698297393667176459}
   - component: {fileID: 5655320769443542358}
   m_Layer: 0
-  m_Name: Theif
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

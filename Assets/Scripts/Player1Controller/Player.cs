@@ -24,14 +24,36 @@ public class Player : NetworkBehaviour
 
     private NetworkCharacterController _cc;
     private Vector3 _forward;
+    [SerializeField] private GameObject _hackerModel;
+    [SerializeField] private GameObject _thiefModel;
+    [SerializeField] private Animator _hackerAnimator;
+    [SerializeField] private Animator _thiefAnimator;
+    private GameObject _activeModel;
+    private Animator _activeAnimator;
 
     private AnimationState _predictedAnimationState; // Predicted animation state on the client side
 
     private void Awake()
     {
         _cc = GetComponent<NetworkCharacterController>();
-        _animator = GetComponentInChildren<Animator>(); // Get the Animator component from the child object
         _forward = transform.forward;
+
+        // Assign the appropriate model and animator based on the player's role
+        if (Role == PlayerRole.Hacker)
+        {
+            _activeModel = _hackerModel;
+            _activeAnimator = _hackerAnimator;
+        }
+        else if (Role == PlayerRole.Thief)
+        {
+            _activeModel = _thiefModel;
+            _activeAnimator = _thiefAnimator;
+        }
+
+        // Ensure only the active model is enabled
+        _hackerModel.SetActive(Role == PlayerRole.Hacker);
+        _thiefModel.SetActive(Role == PlayerRole.Thief);
+    
     }
 
     public override void FixedUpdateNetwork()
@@ -87,10 +109,10 @@ public class Player : NetworkBehaviour
         switch (animationState)
         {
             case AnimationState.Idle:
-                _animator.SetBool("IsWalking", false);
+                _activeAnimator.SetBool("IsWalking", false);
                 break;
             case AnimationState.Walking:
-                _animator.SetBool("IsWalking", true);
+                _activeAnimator.SetBool("IsWalking", true);
                 break;
         }
     }
