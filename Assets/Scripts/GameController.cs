@@ -2,16 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using JetBrains.Annotations;
+
+public enum OperationStatus
+{
+    OnGoing,
+    Caught,
+    KilledInAction,
+    OutOfTime,
+}
 
 public class GameController : MonoBehaviour
 {
 
     public float gameTimer = 5f;
     public TextMeshProUGUI gameTimeText;
+    public OperationStatus opStat;
+    public GameObject outOfTimeScreen;
 
     void Start()
     {
-
+        opStat = OperationStatus.OnGoing;
     }
 
 
@@ -26,7 +38,18 @@ public class GameController : MonoBehaviour
         Debug.Log(gameTimer);
         if (gameTimer <= 0)
         {
-            Debug.Log("game is over");
+            gameTimer = 0;
+            opStat = OperationStatus.OutOfTime;
+        }
+
+        switch (opStat)
+        {
+            case OperationStatus.OutOfTime:
+                //set canvas to active
+                outOfTimeScreen.SetActive(true);
+                //set timescale to 0
+                Time.timeScale = 0f;
+                break;
         }
     }
 }
