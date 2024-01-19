@@ -14,23 +14,24 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     private bool _mouseButton0;
     private string _roomName = "TestRoom"; // Default room name
 
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+{
+    if (runner.IsServer)
     {
-        if (runner.IsServer)
-        {
-            // Create a unique position for the player
-            Vector3 spawnPosition = new Vector3(0, 10, 0);
-            NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
-            
-            // Assign the player role based on the game mode
-            var playerComponent = networkPlayerObject.GetComponent<Player>();
-            playerComponent.Role = runner.IsClient ? Player.PlayerRole.Thief : Player.PlayerRole.Hacker;
+        // Create a unique position for the player
+        Vector3 spawnPosition = new Vector3(0, 10, 0);
+        NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
 
-            // Keep track of the player avatars for easy access
-            _spawnedCharacters.Add(player, networkPlayerObject);
-        }
+    //     // Assign the player role based on the ownership of the network object
+         
+         var playerComponent = networkPlayerObject.GetComponent<Player>();
+         playerComponent.Role = networkPlayerObject.HasInputAuthority ? PlayerRole.Hacker : PlayerRole.Thief;
+
+         Debug.Log("Player Joined");
+       
+        _spawnedCharacters.Add(player, networkPlayerObject);
     }
+}
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         if (_spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
@@ -136,6 +137,7 @@ async void StartGame(GameMode mode)
             GUILayout.Label("Room Name: " + _runner.SessionInfo.Name);
             GUILayout.Label("Players in Room: " + _runner.ActivePlayers);
         }
+        
 }
 
 }
