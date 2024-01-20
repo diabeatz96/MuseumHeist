@@ -65,6 +65,7 @@ public class TimeGui : NetworkBehaviour
         // Set canvas to active
         outOfTimeScreen.SetActive(true);
         gameTimeText.text = "Start a Heist?";
+
         // Set timescale to 0
         //Time.timeScale = 0f;
     }

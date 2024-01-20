@@ -1,7 +1,7 @@
 using System;
 using Fusion;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
     public enum PlayerRole
     {
         Hacker,
@@ -187,11 +187,13 @@ private void Update()
     }
 
      // Different control schemes for Hacker and Thief
-        if (Role == PlayerRole.Hacker)
-        {
-            // Hacker control scheme
-
+    
+        if(gameController.GetComponent<GameController>().opStat == OperationStatus.Finished) {
+            Debug.Log("Game over");
+            return;
         }
+
+
         else if (Role == PlayerRole.Thief)
         {
          // Set the position of the Thief's light to be above the Thief player's head
@@ -202,6 +204,15 @@ private void Update()
 
             ThiefLight.transform.position = transform.position + new Vector3(0, 10, 0); // Adjust the y value to position the light above the player's head
         }
+
+
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(Runner.IsSceneAuthority) {
+             Runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
+             Runner.UnloadScene(SceneRef.FromIndex(0));
+        }
+    }
 }
 
 }

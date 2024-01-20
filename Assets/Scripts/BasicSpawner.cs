@@ -78,12 +78,6 @@ public void OnInput(NetworkRunner runner, NetworkInput input)
     if (Input.GetKey(KeyCode.D))
         data.direction += Vector3.forward; // back
 
-    if (Input.GetKey(KeyCode.Escape)) {
-        if(runner.IsSceneAuthority) {
-            runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
-            runner.UnloadScene(SceneRef.FromIndex(0));
-        }
-    }
     data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
     _mouseButton0 = false;
 
@@ -100,7 +94,9 @@ public void OnInput(NetworkRunner runner, NetworkInput input)
   public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
   public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
   public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken) { }
-  public void OnSceneLoadDone(NetworkRunner runner) { }
+  public void OnSceneLoadDone(NetworkRunner runner) {
+    
+   }
   public void OnSceneLoadStart(NetworkRunner runner) { }
   public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){ }
   public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player){ }

@@ -28,6 +28,8 @@ public class GameController : NetworkBehaviour
     public string myRole;
     private ChangeDetector _changeDetector;
     public Light globalLight; // The global light
+    public GameObject baseSpawner; // The base spawner
+    public GameObject theifSpawner; // The thief spawner
 
     public override void Spawned()
     {
@@ -51,7 +53,7 @@ public class GameController : NetworkBehaviour
         // });
 
         globalLight = GameObject.Find("Directional Light").GetComponent<Light>();
-
+        
         }
 
 public override void FixedUpdateNetwork()

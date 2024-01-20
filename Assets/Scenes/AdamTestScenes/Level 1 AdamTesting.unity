@@ -24961,7 +24961,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -39179,6 +39179,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2457544719450039738, guid: bcb1f546ae8a56044a2f7fa4aa8a1c76, type: 3}
+      propertyPath: baseSpawner
+      value: 
+      objectReference: {fileID: 1695174012}
+    - target: {fileID: 2457544719450039738, guid: bcb1f546ae8a56044a2f7fa4aa8a1c76, type: 3}
+      propertyPath: theifSpawner
+      value: 
+      objectReference: {fileID: 1626490984}
     - target: {fileID: 2457544719450039738, guid: bcb1f546ae8a56044a2f7fa4aa8a1c76, type: 3}
       propertyPath: outOfTimeScreen
       value: 
