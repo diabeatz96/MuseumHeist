@@ -666,6 +666,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 100004, guid: 7b43c2fdb36884081b228729cf2140ca, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: 7b43c2fdb36884081b228729cf2140ca, type: 3}
       propertyPath: m_Name
       value: TV_2
@@ -726,6 +730,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7842f44357acc47f58a86da706575e83, type: 2}
+    - target: {fileID: 2300004, guid: 7b43c2fdb36884081b228729cf2140ca, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 800989ec1a8612a41a036a8f1b41f638, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -908,8 +916,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Join Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01deadf6f3d2f2e4298bca4d60932af2, type: 2}
-  m_sharedMaterial: {fileID: -7234852891806110105, guid: 01deadf6f3d2f2e4298bca4d60932af2,
+  m_fontAsset: {fileID: 11400000, guid: ec2fcb8789800d649a532b3dd8fb67e3, type: 2}
+  m_sharedMaterial: {fileID: -7234852891806110105, guid: ec2fcb8789800d649a532b3dd8fb67e3,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1043,8 +1051,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Host Game
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01deadf6f3d2f2e4298bca4d60932af2, type: 2}
-  m_sharedMaterial: {fileID: -7234852891806110105, guid: 01deadf6f3d2f2e4298bca4d60932af2,
+  m_fontAsset: {fileID: 11400000, guid: ec2fcb8789800d649a532b3dd8fb67e3, type: 2}
+  m_sharedMaterial: {fileID: -7234852891806110105, guid: ec2fcb8789800d649a532b3dd8fb67e3,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -1274,7 +1282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 352, y: 69}
+  m_AnchoredPosition: {x: 339, y: 69}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1687767008
