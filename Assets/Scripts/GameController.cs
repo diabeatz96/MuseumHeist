@@ -25,8 +25,9 @@ public class GameController : NetworkBehaviour
     public GameObject outOfTimeScreen;
     [Networked] public bool timerStarted { get; set; } // Whether the timer has started
     [Networked] public bool startTimerSignal { get; set; } // The signal to start the timer
-    public string myRole = "Hacker";
+    public string myRole;
     private ChangeDetector _changeDetector;
+    public Light globalLight; // The global light
 
     public override void Spawned()
     {
@@ -48,6 +49,8 @@ public class GameController : NetworkBehaviour
         //     // This code will be executed whenever gameTimer changes
         //     UpdateTimerText();
         // });
+
+        globalLight = GameObject.Find("Directional Light").GetComponent<Light>();
 
         }
 
@@ -117,4 +120,13 @@ public void StartTimer()
     {
         opStat = OperationStatus.Finished;
     }
+
+    public void Update() {
+        if(myRole == "Hacker") {
+            globalLight.intensity = 1f;
+        } else {
+            globalLight.intensity = 0f;
+        }
+    }
+
 }

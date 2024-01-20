@@ -16,22 +16,21 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public PlayerCamera playerCamera;
     public GameObject defaultSpawner;
     public GameObject thiefSpawner;
-    private bool first_player = false;
+    private bool first_player = true;
     public GameController gameController; // The GameController instance
+
 public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
 {
     if (runner.IsServer)
     {
-
+        gameController.myRole = "Hacker";
         // Create a unique position for the player
         Vector3 spawnPosition;
         if(first_player) {
-            spawnPosition = thiefSpawner.transform.position;
-            gameController.myRole = "Thief";
-        } else {
             spawnPosition = defaultSpawner.transform.position;
-            first_player = true;
-            gameController.myRole = "Hacker";
+            first_player = false;
+        } else {
+            spawnPosition = thiefSpawner.transform.position;
         }
         
         NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
@@ -49,6 +48,9 @@ public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         // }
 
         _spawnedCharacters.Add(player, networkPlayerObject);
+    } else {
+        Debug.Log("Not server");
+        gameController.myRole = "Thief";
     }
 }
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)

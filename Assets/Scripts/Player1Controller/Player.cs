@@ -190,13 +190,10 @@ private void Update()
         if (Role == PlayerRole.Hacker)
         {
             // Hacker control scheme
-            spotlight.intensity = 1; // Set the spotlight intensity to 1 for the Hacker
 
         }
         else if (Role == PlayerRole.Thief)
         {
-            // Thief control scheme
-            spotlight.intensity = 0; // Set the spotlight intensity to 0 for the Thief
          // Set the position of the Thief's light to be above the Thief player's head
             if(ThiefLight == null) {
                 Debug.Log("ThiefLight is null");

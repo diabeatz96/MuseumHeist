@@ -24,8 +24,8 @@ public class StartHeistTrigger : MonoBehaviour
         // Check if the other collider is the player
         if (other.CompareTag("Player"))
         {
-            // Check if the E key is pressed
-            if (Input.GetKeyDown(KeyCode.E))
+            // Check if the Space key is pressed
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 // Start the timer
                 gameController.TriggerStartTimer();
@@ -35,7 +35,11 @@ public class StartHeistTrigger : MonoBehaviour
 
                 // Set eKeyPressed to true
                 eKeyPressed = true;
+            }
 
+            // Check if the E key is pressed
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 // Switch the camera
                 switchCameras.SwitchCamera(1);
             }

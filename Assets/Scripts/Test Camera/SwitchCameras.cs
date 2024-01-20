@@ -30,6 +30,11 @@ public class SwitchCameras : MonoBehaviour
         // Display the name of the current camera
         cameraNameText.text = cameras[currentCameraIndex].name;
         playerCamera = GameObject.Find("PlayerCam").GetComponent<CinemachineVirtualCamera>();
+    
+        CinemachineBrain cinemachineBrain = Camera.main.GetComponent<CinemachineBrain>();
+
+        // Set the default blend to Cut
+        cinemachineBrain.m_DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Style.Cut, 0);
     }
 
     // Update is called once per frame    
@@ -46,16 +51,15 @@ public class SwitchCameras : MonoBehaviour
                 EnterCameraMode();
             }
         }
-        else if (isInCameraMode && Keyboard.current.qKey.wasPressedThisFrame)
+        else if (isInCameraMode && Keyboard.current.cKey.wasPressedThisFrame)
         {
             SwitchCamera(-1);
         }
-        else if (isInCameraMode && Keyboard.current.wKey.wasPressedThisFrame)
+        else if (isInCameraMode && Keyboard.current.vKey.wasPressedThisFrame)
         {
             SwitchCamera(1);
         }
     }
-
     void EnterCameraMode()
     {
         isInCameraMode = true;
