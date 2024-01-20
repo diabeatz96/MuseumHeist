@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 
@@ -33,12 +34,15 @@ public class Player : NetworkBehaviour
     [SerializeField] private GameObject _thiefModel;
     [SerializeField] private Animator _hackerAnimator;
     [SerializeField] private Animator _thiefAnimator;
+    public GameObject gameController;
     private GameObject _activeModel;
     private Animator _activeAnimator;
+    public Light spotlight; // The spotlight attached to the player
+    public GameObject ThiefLight; // The spotlight attached to the Hacker
     private AnimationState _predictedAnimationState; // Predicted animation state on the client side
     [Networked] public bool IsHost { get; set; }
     bool hasSpawned = false;
-
+public SwitchCameras switchCameras; // The SwitchCameras instance
 private void Awake()
 {
     _cc = GetComponent<NetworkCharacterController>();
@@ -60,6 +64,20 @@ public void Start() {
         // Set the camera target
         playerCamera.SetCameraTarget(transform);
     }
+
+    if(spotlight == null) {
+        Debug.Log("Spotlight is null");
+        spotlight = GameObject.FindGameObjectWithTag("Light").GetComponent<Light>();
+    }
+
+    if (gameController == null) {
+        Debug.Log("GameController is null");
+        gameController = GameObject.Find("GameManager");
+    }
+
+    
+    ThiefLight = GameObject.FindGameObjectWithTag("ThiefLight");
+   
 }
 
 private void UpdateActiveModelAndAnimator()
@@ -148,15 +166,6 @@ public override void FixedUpdateNetwork()
         // Predict the animation state on the client side
         _predictedAnimationState = CurrentAnimationState;
 
-        // Different control schemes for Hacker and Thief
-        if (Role == PlayerRole.Hacker)
-        {
-            // Hacker control scheme
-        }
-        else if (Role == PlayerRole.Thief)
-        {
-            // Thief control scheme
-        }
 
         UpdateActiveModelAndAnimator();   
     }
@@ -176,6 +185,26 @@ private void Update()
             _activeAnimator.SetBool("IsWalking", true);
             break;
     }
+
+     // Different control schemes for Hacker and Thief
+        if (Role == PlayerRole.Hacker)
+        {
+            // Hacker control scheme
+            spotlight.intensity = 1; // Set the spotlight intensity to 1 for the Hacker
+
+        }
+        else if (Role == PlayerRole.Thief)
+        {
+            // Thief control scheme
+            spotlight.intensity = 0; // Set the spotlight intensity to 0 for the Thief
+         // Set the position of the Thief's light to be above the Thief player's head
+            if(ThiefLight == null) {
+                Debug.Log("ThiefLight is null");
+                ThiefLight = GameObject.FindGameObjectWithTag("ThiefLight");
+            }
+
+            ThiefLight.transform.position = transform.position + new Vector3(0, 10, 0); // Adjust the y value to position the light above the player's head
+        }
 }
 
 }
