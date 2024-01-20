@@ -78,6 +78,12 @@ public void OnInput(NetworkRunner runner, NetworkInput input)
     if (Input.GetKey(KeyCode.D))
         data.direction += Vector3.forward; // back
 
+    if (Input.GetKey(KeyCode.Escape)) {
+        if(runner.IsSceneAuthority) {
+            runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
+            runner.UnloadScene(SceneRef.FromIndex(0));
+        }
+    }
     data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
     _mouseButton0 = false;
 
