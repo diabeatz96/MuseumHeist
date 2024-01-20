@@ -13,22 +13,37 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     private Dictionary<PlayerRef, NetworkObject> _spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     private bool _mouseButton0;
     private string _roomName = "TestRoom"; // Default room name
-
+    public PlayerCamera playerCamera;
+    public GameObject defaultSpawner;
+    public GameObject thiefSpawner;
+    private bool first_player = false;
 public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
 {
     if (runner.IsServer)
     {
         // Create a unique position for the player
-        Vector3 spawnPosition = new Vector3(0, 10, 0);
+        Vector3 spawnPosition;
+        if(first_player) {
+            spawnPosition = thiefSpawner.transform.position;
+        } else {
+            spawnPosition = defaultSpawner.transform.position;
+            first_player = true;
+        }
+        
         NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
 
-    //     // Assign the player role based on the ownership of the network object
-         
-         var playerComponent = networkPlayerObject.GetComponent<Player>();
-         playerComponent.Role = networkPlayerObject.HasInputAuthority ? PlayerRole.Hacker : PlayerRole.Thief;
+        // Assign the player role based on the ownership of the network object
+        var playerComponent = networkPlayerObject.GetComponent<Player>();
+        playerComponent.Role = networkPlayerObject.HasInputAuthority ? PlayerRole.Hacker : PlayerRole.Thief;
 
-         Debug.Log("Player Joined");
-       
+        // // If this client has input authority over the network object, set the camera target
+        // if (networkPlayerObject.HasInputAuthority)
+        // {
+        //     Debug.Log("Setting camera target");
+        //     Debug.Log("Player: " + player);
+        //     playerCamera.SetCameraTarget(networkPlayerObject.transform);
+        // }
+
         _spawnedCharacters.Add(player, networkPlayerObject);
     }
 }
@@ -41,28 +56,27 @@ public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
         }
     }
 
-    public void OnInput(NetworkRunner runner, NetworkInput input)
-    {
+public void OnInput(NetworkRunner runner, NetworkInput input)
+{
     var data = new NetworkInputData();
 
     if (Input.GetKey(KeyCode.W))
-        data.direction += Vector3.forward;
+        data.direction += Vector3.left; //right 
 
     if (Input.GetKey(KeyCode.S))
-        data.direction += Vector3.back;
+        data.direction += Vector3.right; //  left
 
     if (Input.GetKey(KeyCode.A))
-        data.direction += Vector3.left;
+        data.direction += Vector3.back; // forward
 
     if (Input.GetKey(KeyCode.D))
-        data.direction += Vector3.right;
+        data.direction += Vector3.forward; // back
 
-    data.buttons.Set( NetworkInputData.MOUSEBUTTON0, _mouseButton0);
+    data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
     _mouseButton0 = false;
 
     input.Set(data);
 }
-
   public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
   public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
   public void OnConnectedToServer(NetworkRunner runner) { }

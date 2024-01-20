@@ -75,8 +75,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.15
-  m_Radius: 0.35
+  m_Height: 1.42
+  m_Radius: 0.4
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -98,7 +98,7 @@ MonoBehaviour:
   jumpImpulse: 8
   acceleration: 10
   braking: 10
-  maxSpeed: 2
+  maxSpeed: 4
   rotationSpeed: 15
 --- !u!114 &5655320769443542358
 MonoBehaviour:
@@ -116,10 +116,12 @@ MonoBehaviour:
   _animator: {fileID: 689094895390138670}
   _Role: 1
   _CurrentAnimationState: 0
+  turnSpeed: 5
   _hackerModel: {fileID: 8838635603133672513}
   _thiefModel: {fileID: 6069678363269538286}
   _hackerAnimator: {fileID: 2811046854075788417}
   _thiefAnimator: {fileID: 689094895390138670}
+  _IsHost: 0
 --- !u!1001 &6411645385349209279
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -134,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 60f55e9530827ea468f66a07fd3adacd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.582
+      value: -0.679
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 60f55e9530827ea468f66a07fd3adacd, type: 3}
       propertyPath: m_LocalPosition.z
