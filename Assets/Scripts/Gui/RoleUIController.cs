@@ -2,14 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+
 public class RoleUIController : MonoBehaviour
 {
     public GameController gameController; // Reference to the GameController
     public TMP_Dropdown roleDropdown; // Reference to the role dropdown
-    public GameObject buttonDetailsPanel; // Reference to the panel that shows the button details
-    public Image buttonImage; // Reference to the image that shows which button to click
-    public Sprite hackerButtonSprite; // The sprite for the hacker button
-    public Sprite thiefButtonSprite; // The sprite for the thief button
+    public GameObject hackerDetails; // Reference to the hacker details panel
+    public GameObject thiefDetails; // Reference to the thief details panel
+    public Canvas uiCanvas; // Reference to the UI canvas
+    public GameObject hackerButtonDetails; // Reference to the hacker button details panel
+    public GameObject thiefButtonDetails; // Reference to the thief button details panel
 
     void Start()
     {
@@ -28,17 +30,22 @@ public class RoleUIController : MonoBehaviour
     {
         // Update the selected dropdown value based on the player's role
         roleDropdown.value = gameController.myRole == "Hacker" ? 0 : 1;
+
+        // Hide the canvas when the 'P' key is pressed
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            uiCanvas.enabled = !uiCanvas.enabled;
+        }
     }
 
     void OnRoleChanged(int index)
     {
-        // Update the button details panel and button image based on the selected role
-        buttonDetailsPanel.SetActive(true);
-        if(gameController.myRole == "Hacker") {
-            buttonDetailsPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Click the button to start the heist";
-        } else {
-            buttonDetailsPanel.GetComponentInChildren<TextMeshProUGUI>().text = "Click the button to stop the heist";
-        }
-        buttonImage.sprite = index == 0 ? hackerButtonSprite : thiefButtonSprite;
+        // Show the hacker details and hacker button details if the selected role is hacker, and hide them otherwise
+        hackerDetails.SetActive(index == 0);
+        hackerButtonDetails.SetActive(index == 0);
+
+        // Show the thief details and thief button details if the selected role is thief, and hide them otherwise
+        thiefDetails.SetActive(index == 1);
+        thiefButtonDetails.SetActive(index == 1);
     }
 }
