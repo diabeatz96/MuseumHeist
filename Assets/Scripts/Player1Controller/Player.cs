@@ -189,7 +189,7 @@ private void Update()
      // Different control schemes for Hacker and Thief
     
         if(gameController.GetComponent<GameController>().opStat == OperationStatus.Finished) {
-            Debug.Log("Game over");
+            
             return;
         }
 

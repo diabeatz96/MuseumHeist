@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Fusion;
+using System;
 
 public enum OperationStatus
 {
@@ -30,6 +31,7 @@ public class GameController : NetworkBehaviour
     public Light globalLight; // The global light
     public GameObject baseSpawner; // The base spawner
     public GameObject theifSpawner; // The thief spawner
+    [Networked] public bool timerEndsSignal { get; set; } // The signal for the timer ends
 
     public override void Spawned()
     {
@@ -60,7 +62,7 @@ public override void FixedUpdateNetwork()
 {
     UpdateTimer();
 
-     foreach (var change in _changeDetector.DetectChanges(this))
+    foreach (var change in _changeDetector.DetectChanges(this))
     {
         switch (change)
         {
@@ -71,14 +73,14 @@ public override void FixedUpdateNetwork()
                     startTimerSignal = false; // Reset the signal
                 }
                 break;
+            case nameof(timerEndsSignal):
+                if (timerEndsSignal) // If the signal is true
+                {
+                    TimerEnds(); // Call TimerEnds
+                    timerEndsSignal = false; // Reset the signal
+                }
+                break;
         }
-    }
-
-    switch (opStat)
-    {
-        case OperationStatus.OutOfTime:
-            TimerEnds();
-            break;
     }
 }
 
@@ -87,6 +89,7 @@ public void TriggerStartTimer()
     // Check if the current instance is the server
     // Set the signal to true
     startTimerSignal = true;
+
 }
 
 public void StartTimer()
@@ -99,7 +102,20 @@ public void StartTimer()
 
         opStat = OperationStatus.OnGoing;
 
-        // UpdateTimerText();
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            if (player.GetComponent<Player>().Role == PlayerRole.Hacker)
+            {
+                Debug.Log("Hacker 1");
+            }
+            else if (player.GetComponent<Player>().Role == PlayerRole.Thief)
+            {
+                Debug.Log("Thief is spawned");
+                player.transform.position = theifSpawner.transform.position;
+            }
+        }
     }
 
     void UpdateTimer()
@@ -115,13 +131,29 @@ public void StartTimer()
         {
             gameTimer = 0;
             opStat = OperationStatus.OutOfTime;
+            timerEndsSignal = true; // Set the signal to true when the timer reaches zero
         }
     }
+void TimerEnds()
+{
+    opStat = OperationStatus.Finished;
+    timerStarted = false; // Reset timerStarted to false
 
-    void TimerEnds()
+    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+    foreach (GameObject player in players)
     {
-        opStat = OperationStatus.Finished;
+        if (player.GetComponent<Player>().Role == PlayerRole.Hacker)
+        {
+            Debug.Log("Hacker 1");
+        }
+        else if (player.GetComponent<Player>().Role == PlayerRole.Thief)
+        {
+            Debug.Log("Thief Move");
+            player.transform.position = baseSpawner.transform.position;
+        }
     }
+}
 
     public void Update() {
         if(myRole == "Hacker") {

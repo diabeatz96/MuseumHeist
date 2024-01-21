@@ -15633,6 +15633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LED_Tube (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8253280251575300542, guid: 20d1a925ab1a84b4881c253bf4a32c09, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24741,7 +24745,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 4
-  far clip plane: 5000
+  far clip plane: 5000.7
   field of view: 60.000004
   orthographic: 0
   orthographic size: 10
@@ -25270,6 +25274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LED_Tube (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8253280251575300542, guid: 20d1a925ab1a84b4881c253bf4a32c09, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8162577571701549386, guid: 20d1a925ab1a84b4881c253bf4a32c09, type: 3}
@@ -25352,6 +25360,10 @@ PrefabInstance:
     - target: {fileID: 3516615319197602939, guid: a79c9cd7b19531948b3eb792ce48fda5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.213
+      objectReference: {fileID: 0}
+    - target: {fileID: 5865371715117838876, guid: a79c9cd7b19531948b3eb792ce48fda5, type: 3}
+      propertyPath: m_Lens.FarClipPlane
+      value: 5000.7
       objectReference: {fileID: 0}
     - target: {fileID: 5865371715117838876, guid: a79c9cd7b19531948b3eb792ce48fda5, type: 3}
       propertyPath: m_Lens.NearClipPlane
@@ -31730,6 +31742,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LED_X_Example
       objectReference: {fileID: 0}
+    - target: {fileID: 660387948819215335, guid: 660e542dbb2b7d2478865c890adcd3af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5569310406201820455, guid: 660e542dbb2b7d2478865c890adcd3af, type: 3}
       propertyPath: m_LocalPosition.x
       value: 125.9
@@ -33291,8 +33307,8 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793755460}
-  m_Enabled: 1
-  m_CastShadows: 1
+  m_Enabled: 0
+  m_CastShadows: 3
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -39922,8 +39938,8 @@ Camera:
   m_GameObject: {fileID: 2097832202}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -40015,6 +40031,10 @@ PrefabInstance:
     - target: {fileID: 8253280251575300542, guid: 20d1a925ab1a84b4881c253bf4a32c09, type: 3}
       propertyPath: m_Name
       value: LED_Tube (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8253280251575300542, guid: 20d1a925ab1a84b4881c253bf4a32c09, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

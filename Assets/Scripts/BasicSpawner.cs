@@ -30,7 +30,7 @@ public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
             spawnPosition = defaultSpawner.transform.position;
             first_player = false;
         } else {
-            spawnPosition = thiefSpawner.transform.position;
+            spawnPosition = defaultSpawner.transform.position;
         }
         
         NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
