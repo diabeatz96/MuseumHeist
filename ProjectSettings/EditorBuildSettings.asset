@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Photon Testing.unity
     guid: 6d0acf2370fdceb41bffcd4f32cb49f2
   - enabled: 0
@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/OutOfTimeScreen.unity
     guid: 8e086cff9d898ac468fb83e751bb5214
+  - enabled: 1
+    path: Assets/Scenes/AdamTestScenes/Level 1 AdamTesting.unity
+    guid: 77d26d5bc26ad6d468ad73c885aabec3
+  - enabled: 0
+    path: Assets/Scenes/PhotonTesting2.unity
+    guid: 1fdcd155654829e46af7211cc9fc4888
+  - enabled: 1
+    path: Assets/Scenes/AdamTestScenes/Level 2 Duplicate Adam.unity
+    guid: 6cc769059c324134ca5888934a345c6b
   m_configObjects: {}

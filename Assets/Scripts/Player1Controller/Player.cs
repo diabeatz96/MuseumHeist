@@ -1,6 +1,7 @@
+using System;
 using Fusion;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
     public enum PlayerRole
     {
         Hacker,
@@ -27,20 +28,56 @@ public class Player : NetworkBehaviour
 
     private NetworkCharacterController _cc;
     private Vector3 _forward;
+    public float turnSpeed = 5f; // The speed at which the player turns
+
     [SerializeField] private GameObject _hackerModel;
     [SerializeField] private GameObject _thiefModel;
     [SerializeField] private Animator _hackerAnimator;
     [SerializeField] private Animator _thiefAnimator;
+    public GameObject gameController;
     private GameObject _activeModel;
     private Animator _activeAnimator;
+    public Light spotlight; // The spotlight attached to the player
+    public GameObject ThiefLight; // The spotlight attached to the Hacker
     private AnimationState _predictedAnimationState; // Predicted animation state on the client side
     [Networked] public bool IsHost { get; set; }
-
+    bool hasSpawned = false;
+public SwitchCameras switchCameras; // The SwitchCameras instance
 private void Awake()
 {
     _cc = GetComponent<NetworkCharacterController>();
     _forward = transform.forward;
+}
 
+public void Start() {
+     // This script is assumed to be attached to the player prefab
+    NetworkObject networkObject = GetComponent<NetworkObject>();
+
+    Debug.Log("NetworkObject: " + networkObject);
+    // Check if this client has input authority over the network object
+    if (networkObject.HasInputAuthority)
+    {
+        // Find the player camera in the scene
+        // This assumes you have a script named PlayerCamera with a SetCameraTarget method
+        PlayerCamera playerCamera = FindObjectOfType<PlayerCamera>();
+        Debug.Log("PlayerCamera: " + playerCamera);
+        // Set the camera target
+        playerCamera.SetCameraTarget(transform);
+    }
+
+    if(spotlight == null) {
+        Debug.Log("Spotlight is null");
+        spotlight = GameObject.FindGameObjectWithTag("Light").GetComponent<Light>();
+    }
+
+    if (gameController == null) {
+        Debug.Log("GameController is null");
+        gameController = GameObject.Find("GameManager");
+    }
+
+    
+    ThiefLight = GameObject.FindGameObjectWithTag("ThiefLight");
+   
 }
 
 private void UpdateActiveModelAndAnimator()
@@ -68,7 +105,10 @@ public override void Spawned()
 
     // Set the player's role based on whether the player has state authority
     
+    Debug.Log("Spawned");
     Role = PlayerRole.Hacker;
+    hasSpawned = true;
+    Debug.Log("Role: " + Role);
 
     // Debug.Log("HasStateAuthority: " + HasStateAuthority);
     // Debug.Log("Role: " + Role);
@@ -77,50 +117,58 @@ public override void Spawned()
     UpdateActiveModelAndAnimator();
 }
 
+
 public override void FixedUpdateNetwork()
 {
+    if (!hasSpawned) {
+        Debug.Log("Has not spawned");
+        return;
+    }
+
     if (GetInput(out NetworkInputData data))
     {
+        // Debug.Log("FixedUpdateNetwork");
         data.direction.Normalize();
+        // Debug.Log("Spawn position: " + transform.position);
+        // Debug.Log("Direction: " + data.direction);
+        // Debug.Log("DeltaTime: " + Runner.DeltaTime);
 
+        // Apply the rotation
+        //transform.Rotate(0, data.rotation * turnSpeed * Time.deltaTime, 0);
+        
+        if (data.direction.x != 0 || data.direction.z != 0 || data.direction.y != 0)
+        {
+            _cc.Move(5 * data.direction * Runner.DeltaTime);
+
+            
+            // // Calculate the target rotation
+            // Quaternion targetRotation = Quaternion.LookRotation(data.direction);
+
+            // // Smoothly rotate towards the target rotation
+            // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+        }
+
+        if (data.direction.sqrMagnitude > 0)
+            _forward = data.direction;
+        
+        // Debug.Log("Spawn position: " + transform.position);
+        // Debug.Log("Direction: " + data.direction);
+        // Debug.Log("DeltaTime: " + Runner.DeltaTime);
+
+        // // Update the animation state based on the player's movement
+        // //_cc.Move(5 * data.direction * Runner.DeltaTime);
+        // Debug.Log("Direction: " + data.direction);
+        // Debug.Log("Runner.DeltaTime: " + Runner.DeltaTime);
+        // Debug.Log("Velocity: " + data.direction * Runner.DeltaTime);
         // Update the animation state based on the player's movement
         CurrentAnimationState = data.direction.sqrMagnitude > 0 ? AnimationState.Walking : AnimationState.Idle;
 
         // Predict the animation state on the client side
         _predictedAnimationState = CurrentAnimationState;
 
-        // Different control schemes for Hacker and Thief
-        if (Role == PlayerRole.Hacker)
-        {
-            // Hacker control scheme
-        }
-        else if (Role == PlayerRole.Thief)
-        {
-            // Thief control scheme
-        }
 
-        _cc.Move(5 * data.direction * Runner.DeltaTime);
-
-        if (data.direction.sqrMagnitude > 0)
-            _forward = data.direction;
-
-        if (HasStateAuthority && delay.ExpiredOrNotRunning(Runner))
-        {
-            if (data.buttons.IsSet(NetworkInputData.MOUSEBUTTON0))
-            {
-                delay = TickTimer.CreateFromSeconds(Runner, 0.5f);
-                Runner.Spawn(_prefabBall,
-                transform.position + _forward, Quaternion.LookRotation(_forward),
-                Object.InputAuthority, (runner, o) =>
-                {
-                    // Initialize the Ball before synchronizing it
-                    o.GetComponent<Ball>().Init();
-                });
-            }
-        }
+        UpdateActiveModelAndAnimator();   
     }
-
-    UpdateActiveModelAndAnimator();
 }
 
 private void Update()
@@ -137,6 +185,60 @@ private void Update()
             _activeAnimator.SetBool("IsWalking", true);
             break;
     }
+
+     // Different control schemes for Hacker and Thief
+    
+        if(gameController.GetComponent<GameController>().opStat == OperationStatus.Finished) {
+            
+            return;
+        }
+
+
+        else if (Role == PlayerRole.Thief)
+        {
+         // Set the position of the Thief's light to be above the Thief player's head
+            if(ThiefLight == null) {
+                Debug.Log("ThiefLight is null");
+                ThiefLight = GameObject.FindGameObjectWithTag("ThiefLight");
+            }
+
+            ThiefLight.transform.position = transform.position + new Vector3(0, 10, 0); // Adjust the y value to position the light above the player's head
+        }
+
+
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if(Runner.IsSceneAuthority) {
+             Runner.LoadScene(SceneRef.FromIndex(1), LoadSceneMode.Additive);
+             Runner.UnloadScene(SceneRef.FromIndex(0));
+        }
+    }
 }
+
+private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Artifact")
+        {
+            gameController.GetComponent<GameController>().hasArtifact = true;
+        }
+        else if (other.gameObject.tag == "Trap")
+        {
+            gameController.GetComponent<GameController>().hasBeenCaught = true;
+            gameController.GetComponent<GameController>().EndTimerIsCaught(); 
+        }
+        else if (other.gameObject.tag == "Escape")
+        {
+            Debug.Log("NO ARTIFACT");
+            if (gameController.GetComponent<GameController>().hasArtifact)
+            {
+                transform.position = gameController.GetComponent<GameController>().baseSpawner.transform.position;
+                Debug.Log("Escaped");
+                Debug.Log("TELEPORT");
+                gameController.GetComponent<GameController>().hasArtifact = false;
+                gameController.GetComponent<GameController>().hasEscaped = true;
+                gameController.GetComponent<GameController>().Escaped(); 
+            }
+        }
+    }
 
 }

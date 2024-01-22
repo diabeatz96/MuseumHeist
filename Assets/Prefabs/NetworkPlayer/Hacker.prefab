@@ -189,10 +189,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3341160994306245292}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62f5ed82796f83e4bb310e911dd5303f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabBall: {fileID: -1272921025896456566, guid: c46b597f86d629645bc0c3b64a81cc48, type: 3}
+  _animator: {fileID: 0}
   _Role: 0
+  _CurrentAnimationState: 0
+  _hackerModel: {fileID: 0}
+  _thiefModel: {fileID: 0}
+  _hackerAnimator: {fileID: 0}
+  _thiefAnimator: {fileID: 0}
+  _IsHost: 0

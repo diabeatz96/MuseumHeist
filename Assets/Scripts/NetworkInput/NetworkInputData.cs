@@ -7,4 +7,5 @@ public struct NetworkInputData : INetworkInput
 
     public NetworkButtons buttons;
     public Vector3 direction;
+    public float rotation; // The rotation input
 }
