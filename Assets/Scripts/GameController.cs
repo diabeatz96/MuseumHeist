@@ -161,6 +161,7 @@ public void Escaped()
 
 public void EndTimerIsCaught ()
 {
+    gameTimer = 60f;
     opStat = OperationStatus.Caught;
     timerEndsSignal = true; // Set the signal to true when the timer reaches zero
 }

@@ -221,12 +221,6 @@ private void OnTriggerEnter(Collider other)
         {
             gameController.GetComponent<GameController>().hasArtifact = true;
         }
-        else if (other.gameObject.tag == "Trap")
-        {
-            this.gameObject.transform.position = gameController.GetComponent<GameController>().baseSpawner.transform.position;
-            gameController.GetComponent<GameController>().hasBeenCaught = true;
-            gameController.GetComponent<GameController>().EndTimerIsCaught(); 
-        }
         else if (other.gameObject.tag == "Escape")
         {
             Debug.Log("NO ARTIFACT");
