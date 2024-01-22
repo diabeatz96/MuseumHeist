@@ -57,7 +57,7 @@ public class GameController : NetworkBehaviour
         //     UpdateTimerText();
         // });
 
-        globalLight = GameObject.Find("Directional Light").GetComponent<Light>();
+        // globalLight = GameObject.Find("Directional Light").GetComponent<Light>();
         
         }
 
