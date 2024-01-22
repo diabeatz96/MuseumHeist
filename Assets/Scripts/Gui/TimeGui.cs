@@ -8,6 +8,7 @@ public class TimeGui : NetworkBehaviour
 {
     public GameController gameController; // The GameController instance
     public TextMeshProUGUI gameTimeText; // The TextMeshProUGUI element that displays the game timer
+    public TextMeshProUGUI operationStatusText; // The TextMeshProUGUI element that displays the operation status
     public GameObject outOfTimeScreen; // The screen to display when the timer ends
     bool spawned = false;
 
@@ -19,32 +20,24 @@ public class TimeGui : NetworkBehaviour
     public override void Spawned()
     {
         spawned = true;
+        string artifactStatus = gameController.hasArtifact ? "\nPlayer has the artifact." : "\nPlayer does not have the artifact.";
+        operationStatusText.text = "Operation Status: " + gameController.opStat.ToString() + ". " + artifactStatus;
     }
 
-    
     public void FixedUpdate() {
 
         if(!spawned) {
             return;
         }
 
-         UpdateTimerText();
+        UpdateTimerText();
+        UpdateOperationStatusText();
 
         if (gameController.opStat == OperationStatus.OutOfTime)
         {
             TimerEnds();
         }
     }
-    // public override void FixedUpdateNetwork()
-    // {
-        
-    //     UpdateTimerText();
-
-    //     if (gameController.opStat == OperationStatus.OutOfTime)
-    //     {
-    //         TimerEnds();
-    //     }
-    // }
 
     void UpdateTimerText()
     {
@@ -57,6 +50,19 @@ public class TimeGui : NetworkBehaviour
         if (gameController.gameTimer <= 0 && gameController.opStat != OperationStatus.OutOfTime)
         {
             TimerEnds();
+        }
+    }
+
+    void UpdateOperationStatusText()
+    {
+        string artifactStatus = gameController.hasArtifact ? "\nThief has the artifact." : "\nThief does not have the artifact.";
+        if (gameController.opStat == OperationStatus.Finished && gameController.hasArtifact)
+        {
+            operationStatusText.text = "You won! Hacker press escape for next level.";
+        }
+        else
+        {
+            operationStatusText.text = "Operation Status: " + gameController.opStat.ToString() + ". " + artifactStatus;
         }
     }
 

@@ -32,6 +32,9 @@ public class GameController : NetworkBehaviour
     public GameObject baseSpawner; // The base spawner
     public GameObject theifSpawner; // The thief spawner
     [Networked] public bool timerEndsSignal { get; set; } // The signal for the timer ends
+    [Networked] public bool hasArtifact { get; set; } // Whether the thief has the artifact
+    [Networked] public bool hasBeenCaught { get; set; } // Whether the thief has been caught
+    [Networked] public bool hasEscaped { get; set; } // Whether the thief has escaped
 
     public override void Spawned()
     {
@@ -134,6 +137,34 @@ public void StartTimer()
             timerEndsSignal = true; // Set the signal to true when the timer reaches zero
         }
     }
+
+public void Escaped()
+{
+    opStat = OperationStatus.Finished;
+    timerStarted = false; // Reset timerStarted to false
+
+    GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+    foreach (GameObject player in players)
+    {
+        if (player.GetComponent<Player>().Role == PlayerRole.Hacker)
+        {
+            Debug.Log("Hacker 1");
+        }
+        else if (player.GetComponent<Player>().Role == PlayerRole.Thief)
+        {
+            Debug.Log("Thief Move");
+            player.transform.position = baseSpawner.transform.position;
+        }
+    }
+}
+
+public void EndTimerIsCaught ()
+{
+    opStat = OperationStatus.Caught;
+    timerEndsSignal = true; // Set the signal to true when the timer reaches zero
+}
+
 void TimerEnds()
 {
     opStat = OperationStatus.Finished;

@@ -215,4 +215,30 @@ private void Update()
     }
 }
 
+private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Artifact")
+        {
+            gameController.GetComponent<GameController>().hasArtifact = true;
+        }
+        else if (other.gameObject.tag == "Trap")
+        {
+            gameController.GetComponent<GameController>().hasBeenCaught = true;
+            gameController.GetComponent<GameController>().EndTimerIsCaught(); 
+        }
+        else if (other.gameObject.tag == "Escape")
+        {
+            Debug.Log("NO ARTIFACT");
+            if (gameController.GetComponent<GameController>().hasArtifact)
+            {
+                transform.position = gameController.GetComponent<GameController>().baseSpawner.transform.position;
+                Debug.Log("Escaped");
+                Debug.Log("TELEPORT");
+                gameController.GetComponent<GameController>().hasArtifact = false;
+                gameController.GetComponent<GameController>().hasEscaped = true;
+                gameController.GetComponent<GameController>().Escaped(); 
+            }
+        }
+    }
+
 }
