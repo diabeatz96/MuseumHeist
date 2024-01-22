@@ -18,6 +18,7 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public GameObject thiefSpawner;
     private bool first_player = true;
     public GameController gameController; // The GameController instance
+    private GameMode _gameMode; // Game mode will be loaded from PlayerPrefs
 
 public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
 {
@@ -108,6 +109,17 @@ private void Update()
   
 }
 
+ private void Start()
+    {
+        // Retrieve room name and game mode from PlayerPrefs
+        _roomName = PlayerPrefs.GetString("RoomName");
+        string gameMode = PlayerPrefs.GetString("GameMode");
+        _gameMode = gameMode == "Host" ? GameMode.Host : GameMode.Client;
+
+        // Start the game with the retrieved game mode
+        StartGame(_gameMode);
+    }
+
 async void StartGame(GameMode mode)
 {
     // Create the Fusion runner and let it know that we will be providing user input
@@ -132,38 +144,40 @@ async void StartGame(GameMode mode)
     });
 }
 
+    
+
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
     {
         throw new NotImplementedException();
     }
 
-    private void OnGUI()
-{
-  if (_runner == null)
-  {
-    _roomName = GUI.TextField(new Rect(0, 80, 200, 20), _roomName);
+//     private void OnGUI()
+// {
+//   if (_runner == null)
+//   {
+//     _roomName = GUI.TextField(new Rect(0, 80, 200, 20), _roomName);
     
-    if (GUI.Button(new Rect(0,0,200,40), "Host"))
-    {
-        StartGame(GameMode.Host);
-    }
-    if (GUI.Button(new Rect(0,40,200,40), "Join"))
-    {
-        StartGame(GameMode.Client);
-    }
-  }
+//     if (GUI.Button(new Rect(0,0,200,40), "Host"))
+//     {
+//         StartGame(GameMode.Host);
+//     }
+//     if (GUI.Button(new Rect(0,40,200,40), "Join"))
+//     {
+//         StartGame(GameMode.Client);
+//     }
+//   }
 
-  if (_runner != null)
-        {
-            GUILayout.Label("Fusion Network Info:");
-            GUILayout.Label("Cam Spawn?: " + _runner.CanSpawn);
-            GUILayout.Label("Connected: " + (_runner.IsRunning ? "Yes" : "No"));
-            GUILayout.Label("In Client or Host?: " + (_runner.IsClient ? "Client" : "Host"));            
-            GUILayout.Label("Room Name: " + _runner.SessionInfo.Name);
-            GUILayout.Label("Players in Room: " + _runner.ActivePlayers);
-        }
+//   if (_runner != null)
+//         {
+//             GUILayout.Label("Fusion Network Info:");
+//             GUILayout.Label("Cam Spawn?: " + _runner.CanSpawn);
+//             GUILayout.Label("Connected: " + (_runner.IsRunning ? "Yes" : "No"));
+//             GUILayout.Label("In Client or Host?: " + (_runner.IsClient ? "Client" : "Host"));            
+//             GUILayout.Label("Room Name: " + _runner.SessionInfo.Name);
+//             GUILayout.Label("Players in Room: " + _runner.ActivePlayers);
+//         }
         
-}
+// }
 
 }
 
