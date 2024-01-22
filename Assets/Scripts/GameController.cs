@@ -190,7 +190,7 @@ void TimerEnds()
         if(myRole == "Hacker") {
             globalLight.intensity = 1f;
         } else {
-            globalLight.intensity = 0f;
+            globalLight.intensity = 0.005f;
         }
     }
 
