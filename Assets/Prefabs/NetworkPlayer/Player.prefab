@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1273220616890812900}
   - component: {fileID: 5698297393667176459}
   - component: {fileID: 5655320769443542358}
-  - component: {fileID: 7304286621305036619}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -127,29 +126,6 @@ MonoBehaviour:
   ThiefLight: {fileID: 0}
   _IsHost: 0
   switchCameras: {fileID: 0}
---- !u!136 &7304286621305036619
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3341160994306245292}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.39
-  m_Height: 1.61
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &6411645385349209279
 PrefabInstance:
   m_ObjectHideFlags: 0
