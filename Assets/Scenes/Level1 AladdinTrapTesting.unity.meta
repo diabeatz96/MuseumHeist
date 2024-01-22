@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Level1.meta
+guid: 64cc374fe0721e9479dbd834bdcd2f5e
+folderAsset: yes
+========
 guid: c82dd73b86404ba4ab2d013ab3b99282
+>>>>>>>> main:Assets/Scenes/Level1 AladdinTrapTesting.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

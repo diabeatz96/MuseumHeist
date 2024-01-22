@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Level1/Materials.meta
+guid: 1f0632caa9baaea4db8c707d6d0126ea
+folderAsset: yes
+========
 guid: cf936d8edfbc3f94e95a4fe2a9b9d9c3
+>>>>>>>> main:Assets/Scenes/TrapsScene.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

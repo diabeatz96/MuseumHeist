@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/Level1/Outdoor.meta
+guid: e12d886a63188c741b5a4b46f6ed7ab3
+folderAsset: yes
+========
 guid: 0851605490a599b46b6ac5cb681d93ea
+>>>>>>>> main:Assets/TextMesh Pro/Examples & Extras/Scenes/26 - Dropdown Placeholder Example.unity.meta
 DefaultImporter:
   externalObjects: {}
   userData: 
