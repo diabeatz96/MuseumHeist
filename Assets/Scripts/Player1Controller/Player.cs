@@ -223,6 +223,7 @@ private void OnTriggerEnter(Collider other)
         }
         else if (other.gameObject.tag == "Trap")
         {
+            this.gameObject.transform.position = gameController.GetComponent<GameController>().baseSpawner.transform.position;
             gameController.GetComponent<GameController>().hasBeenCaught = true;
             gameController.GetComponent<GameController>().EndTimerIsCaught(); 
         }
