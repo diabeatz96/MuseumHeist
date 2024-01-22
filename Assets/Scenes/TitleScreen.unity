@@ -1426,8 +1426,33 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1259053443}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100008, guid: 7b43c2fdb36884081b228729cf2140ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 692188782}
   m_SourcePrefab: {fileID: 100100000, guid: 7b43c2fdb36884081b228729cf2140ca, type: 3}
+--- !u!1 &692188781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100008, guid: 7b43c2fdb36884081b228729cf2140ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 692188780}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &692188782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692188781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03b1a66a4dd299a46bfe41f07f324d4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screens:
+  - {fileID: 1559750569}
+  - {fileID: 1259053442}
 --- !u!1 &723259624
 GameObject:
   m_ObjectHideFlags: 0
@@ -1713,12 +1738,12 @@ GameObject:
   - component: {fileID: 1259053445}
   - component: {fileID: 1259053444}
   m_Layer: 0
-  m_Name: Screen (1)
+  m_Name: MuseumScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1259053443
 Transform:
   m_ObjectHideFlags: 0
@@ -2054,6 +2079,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1529883045}
   m_CullTransparentMesh: 1
+--- !u!1 &1559750569 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100006, guid: 7b43c2fdb36884081b228729cf2140ca,
+    type: 3}
+  m_PrefabInstance: {fileID: 692188780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1665854167
 GameObject:
   m_ObjectHideFlags: 0
