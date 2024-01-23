@@ -79,6 +79,9 @@ public void OnInput(NetworkRunner runner, NetworkInput input)
     if (Input.GetKey(KeyCode.D))
         data.direction += Vector3.forward; // back
 
+    // if (Input.GetKey(KeyCode.Space))
+    //     data.direction += Vector3.up; // down
+
     data.buttons.Set(NetworkInputData.MOUSEBUTTON0, _mouseButton0);
     _mouseButton0 = false;
 

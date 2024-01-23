@@ -9,6 +9,7 @@ TagManager:
   - ThiefLight
   - Artifact
   - Escape
+  - Trophy
   layers:
   - Default
   - TransparentFX

@@ -157,6 +157,11 @@ public void Escaped()
             player.transform.position = baseSpawner.transform.position;
         }
     }
+
+    if(Runner.IsSceneAuthority) {
+        Runner.LoadScene("WinScreen");
+        Runner.UnloadScene(SceneRef.FromIndex(1));
+    }
 }
 
 public void EndTimerIsCaught ()

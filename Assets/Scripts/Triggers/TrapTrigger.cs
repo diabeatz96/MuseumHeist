@@ -5,8 +5,7 @@ public class TrapTrigger : NetworkBehaviour
 {
     public GameController gameController; // Reference to the GameController
 
-    private float cooldownTime = 1.0f; // 1 second cooldown
-    private float nextTriggerTime = 0;
+    private bool playerInTrigger = false;
 
     void Start()
     {
@@ -16,22 +15,31 @@ public class TrapTrigger : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger detected");
-        if (other.gameObject.CompareTag("Player") && Time.time > nextTriggerTime)
+        // Check if we are on the server
+        if (Runner.IsServer && other.gameObject.CompareTag("Player") && !playerInTrigger)
         {
-            nextTriggerTime = Time.time + cooldownTime;
+            playerInTrigger = true;
+            Debug.Log("Trigger detected");
             Debug.Log("Trap triggered");
 
-            // Check if we are on the server
-            if (Runner.IsServer)
-            {
-                // Move the player to the base spawner position
-                //other.gameObject.transform.position = gameController.baseSpawner.transform.position;
+            // Move the player to the base spawner position
+            other.gameObject.transform.position = gameController.baseSpawner.transform.position;
 
-                // Set hasBeenCaught to true and end the timer
-                gameController.hasBeenCaught = true;
-                gameController.EndTimerIsCaught();
-            }
+            Debug.Log("Player moved to base spawner");
+            Debug.Log("Player position: " + other.gameObject.transform.position);
+            
+            // Set hasBeenCaught to true and end the timer
+            gameController.hasBeenCaught = true;
+            gameController.EndTimerIsCaught();
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Check if we are on the server
+        if (Runner.IsServer && other.gameObject.CompareTag("Player"))
+        {
+            playerInTrigger = false;
         }
     }
 }
