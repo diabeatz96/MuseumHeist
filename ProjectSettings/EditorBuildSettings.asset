@@ -29,4 +29,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/AdamTestScenes/Level 2 Duplicate Adam.unity
     guid: 6cc769059c324134ca5888934a345c6b
+  - enabled: 1
+    path: Assets/Scenes/LoseScreen.unity
+    guid: 8967297ae7bc45c4981dbff65916f782
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: a1f1dbf34c7573e42918fa48bfdc2a7c
   m_configObjects: {}

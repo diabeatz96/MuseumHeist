@@ -37,6 +37,8 @@ public class Player : NetworkBehaviour
     public GameObject gameController;
     private GameObject _activeModel;
     private Animator _activeAnimator;
+    public GameObject trophy;
+    public GameObject trophyBack;
     public Light spotlight; // The spotlight attached to the player
     public GameObject ThiefLight; // The spotlight attached to the Hacker
     private AnimationState _predictedAnimationState; // Predicted animation state on the client side
@@ -73,6 +75,11 @@ public void Start() {
     if (gameController == null) {
         Debug.Log("GameController is null");
         gameController = GameObject.Find("GameManager");
+    }
+
+    if(trophy == null) {
+        Debug.Log("Trophy is null");
+        trophy = GameObject.FindGameObjectWithTag("Trophy");
     }
 
     
@@ -127,45 +134,24 @@ public override void FixedUpdateNetwork()
 
     if (GetInput(out NetworkInputData data))
     {
-        // Debug.Log("FixedUpdateNetwork");
         data.direction.Normalize();
-        // Debug.Log("Spawn position: " + transform.position);
-        // Debug.Log("Direction: " + data.direction);
-        // Debug.Log("DeltaTime: " + Runner.DeltaTime);
 
-        // Apply the rotation
-        //transform.Rotate(0, data.rotation * turnSpeed * Time.deltaTime, 0);
-        
         if (data.direction.x != 0 || data.direction.z != 0 || data.direction.y != 0)
         {
             _cc.Move(5 * data.direction * Runner.DeltaTime);
-
-            
-            // // Calculate the target rotation
-            // Quaternion targetRotation = Quaternion.LookRotation(data.direction);
-
-            // // Smoothly rotate towards the target rotation
-            // transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
         }
+
+        // // Move this outside of the above if condition
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     _cc.Jump();
+        // }
 
         if (data.direction.sqrMagnitude > 0)
             _forward = data.direction;
-        
-        // Debug.Log("Spawn position: " + transform.position);
-        // Debug.Log("Direction: " + data.direction);
-        // Debug.Log("DeltaTime: " + Runner.DeltaTime);
 
-        // // Update the animation state based on the player's movement
-        // //_cc.Move(5 * data.direction * Runner.DeltaTime);
-        // Debug.Log("Direction: " + data.direction);
-        // Debug.Log("Runner.DeltaTime: " + Runner.DeltaTime);
-        // Debug.Log("Velocity: " + data.direction * Runner.DeltaTime);
-        // Update the animation state based on the player's movement
         CurrentAnimationState = data.direction.sqrMagnitude > 0 ? AnimationState.Walking : AnimationState.Idle;
-
-        // Predict the animation state on the client side
         _predictedAnimationState = CurrentAnimationState;
-
 
         UpdateActiveModelAndAnimator();   
     }
@@ -193,7 +179,6 @@ private void Update()
             return;
         }
 
-
         else if (Role == PlayerRole.Thief)
         {
          // Set the position of the Thief's light to be above the Thief player's head
@@ -219,13 +204,10 @@ private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Artifact")
         {
+
+            trophy.SetActive(false);
+            trophyBack.SetActive(true);
             gameController.GetComponent<GameController>().hasArtifact = true;
-        }
-        else if (other.gameObject.tag == "Trap")
-        {
-            this.gameObject.transform.position = gameController.GetComponent<GameController>().baseSpawner.transform.position;
-            gameController.GetComponent<GameController>().hasBeenCaught = true;
-            gameController.GetComponent<GameController>().EndTimerIsCaught(); 
         }
         else if (other.gameObject.tag == "Escape")
         {

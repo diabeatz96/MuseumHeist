@@ -157,10 +157,16 @@ public void Escaped()
             player.transform.position = baseSpawner.transform.position;
         }
     }
+
+    if(Runner.IsSceneAuthority) {
+        Runner.LoadScene("WinScreen");
+        Runner.UnloadScene(SceneRef.FromIndex(1));
+    }
 }
 
 public void EndTimerIsCaught ()
 {
+    gameTimer = 60f;
     opStat = OperationStatus.Caught;
     timerEndsSignal = true; // Set the signal to true when the timer reaches zero
 }
